@@ -49,12 +49,6 @@ Getting Started Clone the repository to your local machine:
 ### 1. Category and Subcategory Tables
 
 #### Category Table
-
-- **category_id** (primary key)
-- **category_name**
-- **category_description**
-
-Example:
 ```sql
 category_id   category_name    category_description
 ---------------------------------------------------
