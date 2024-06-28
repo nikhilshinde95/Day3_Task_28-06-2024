@@ -8,7 +8,7 @@ The project uses PostgreSQL as the database and follows standard Java and SQL na
 
 ## GitHub Clone Link
 
-Getting Started Clone the repository to your local machine: 
+Getting Started Clone the repository to your local machine: https://github.com/nikhilshinde95/Day3_Task_28-06-2024.git
 
 ## Technologies Used
 
