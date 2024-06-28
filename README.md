@@ -62,7 +62,7 @@ category_id   category_name    category_description
 2             SQL              Database SQL category
 3             Spring Boot      Spring Boot Framework category
 
-Update MCQ Question Table
+#### Subcategory Table
 
 subcategory_id   category_id   subcategory_name      subcategory_description
 -----------------------------------------------------------------------------
