@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.org.dao.MCQDao;
+import com.org.dao.SubcategoryRepository;
 import com.org.entities.MCQQuestion;
+import com.org.entities.Subcategory;
 
 @Service
 public class MCQQuestionServiceImpl implements MCQService {
@@ -19,6 +21,9 @@ public class MCQQuestionServiceImpl implements MCQService {
 
     @Autowired
     private MCQDao mcqDao;
+    
+    @Autowired
+    private SubcategoryRepository subcategoryRepository;
 
     @Override
     public List<MCQQuestion> getAllQuestions() {
@@ -42,6 +47,9 @@ public class MCQQuestionServiceImpl implements MCQService {
     @Override
     public MCQQuestion createQuestion(MCQQuestion mcqQuestion) {
         logger.info("Creating new question: {}", mcqQuestion);
+        Optional<Subcategory> subCategoryOpt = subcategoryRepository.findById(mcqQuestion.getSubcategory().getId());
+        Subcategory subcategory = subCategoryOpt.get();
+        mcqQuestion.setSubcategory(subcategory);
         MCQQuestion saveQuestion = mcqDao.save(mcqQuestion);
         return saveQuestion;
     }
