@@ -16,8 +16,7 @@ public class Subcategory {
 	@Column(name = "subcategory_id")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
 	private Category category;
 
