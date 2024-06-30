@@ -15,9 +15,8 @@ public class MCQQuestion {
 	@Column(name = "question_id")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnore
-	@JoinColumn(name = "subcategory_id")
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "subcategory_id",  referencedColumnName = "subcategory_id")
 	private Subcategory subcategory;
 
 	@Column(name = "question")
