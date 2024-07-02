@@ -1,7 +1,9 @@
 package com.org.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.entities.MCQQuestion;
 import com.org.services.MCQQuestionServiceImpl;
+import com.org.services.MCQService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,7 +22,7 @@ public class MCQQuestionController {
     private static final Logger logger = LoggerFactory.getLogger(MCQQuestionController.class);
 
     @Autowired
-    private MCQQuestionServiceImpl questionService;
+    private MCQService questionService;
 
     @GetMapping("/questions")
     public List<MCQQuestion> getAllQuestions() {
@@ -80,5 +84,17 @@ public class MCQQuestionController {
             logger.error("Error occurred while deleting question with id: {}. Error message: {}", questionId, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    
+    @PostMapping("/upload")
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        List<MCQQuestion> questions = questionService.uploadQuestions(file);
+        if (questions.isEmpty()) {
+        	return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Failed to create Mcq Question from Excel provided Category or Subcategory not found ");
+        }
+		return ResponseEntity.status(HttpStatus.CREATED).body(questions);
     }
 }
