@@ -23,15 +23,19 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> getAllCategories() {
 		log.info("Fetching ALL Categories");
-		return categoryRepository.findAll();
+		List<Category> list = categoryRepository.findAll();
+		log.info("All Categories are Fetched Successfully..");
+		return list;
 	}
 
 	@Override
 	public Category getCategoryById(Long id) {
+		
 		log.info("Fetching Category With ID {}",id);
 		Optional<Category> category = categoryRepository.findById(id);
 		
 		if(category.isPresent()) {
+			log.debug("Category is Present.");
 			return category.get();
 		}else {
 			String errorMessage = "Question not found with id: " + id;
@@ -45,6 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category createCategory(Category category) {
 		log.info("Adding New Category..");
 		Category saveCategory = categoryRepository.save(category);
+		log.info("Category is Added Successfully..");
 		return saveCategory;
 	}
 
@@ -52,6 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category updateCategory(Category category) {
 		log.info("Updating Existing Category..");
 		Category updateCategory = categoryRepository.save(category);
+		log.info("Category is Updated Successfully...");
 		return updateCategory;
 	}
 
@@ -62,9 +68,11 @@ public class CategoryServiceImpl implements CategoryService {
 			
 			Optional<Category> category = categoryRepository.findById(id);
 			if (category.isPresent()) {
+				log.debug("Category with Id {} is Deleted Successfully.",id);
 				categoryRepository.delete(category.get());
 				return true;
 			} else {
+				log.error("Category is Not Found.");
 				throw new RuntimeException("Category not found");
 			}
 		}catch(NumberFormatException e) {
