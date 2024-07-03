@@ -49,7 +49,7 @@ public class SubcategoryController {
     }
 
     @PostMapping("/subcategories")
-    public ResponseEntity<Subcategory> createSubcategory(@RequestBody Subcategory subcategory) {
+    public ResponseEntity<Object> createSubcategory(@RequestBody Subcategory subcategory) {
         try {
             logger.info("Creating subcategory: {}", subcategory);
             Category category = categoryService.getCategoryById(subcategory.getCategory().getId());
@@ -60,7 +60,10 @@ public class SubcategoryController {
             subcategory.setCategory(category);
 
             Subcategory createdSubcategory = subcategoryService.createSubcategory(subcategory);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdSubcategory);
+            if (createdSubcategory != null && createdSubcategory.getId() != null) {
+            	return ResponseEntity.status(HttpStatus.CREATED).body(createdSubcategory);
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Subcategory is Already Exists in Database");
         } catch (Exception e) {
             logger.error("Error occurred while creating subcategory. Error message: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
