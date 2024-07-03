@@ -40,11 +40,14 @@ public class CategoryController {
 	}
 
 	@PostMapping("/categories")
-	public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+	public ResponseEntity<Object> createCategory(@RequestBody Category category) {
 		try {
 			logger.info("Creating category: {}", category);
 			Category createdCategory = categoryService.createCategory(category);
-			return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+			if(createdCategory !=null && createdCategory.getId()!=null) {
+				return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+			}
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Subcategory is Already Exists in Database");
 		} catch (Exception e) {
 			logger.error("Error occurred while creating category. Error message: {}", e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
