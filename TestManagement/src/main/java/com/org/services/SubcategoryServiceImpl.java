@@ -48,9 +48,16 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Override
 	public Subcategory createSubcategory(Subcategory subcategory) {
 		log.info("Adding New Subcategory in Database...");
-		Subcategory saveSubcategories = subcategoryRepository.save(subcategory);
-		log.info("New Subcategory is Added Successfully..");
-		return saveSubcategories;
+		
+		Optional<Subcategory> byNameandFindByDescription = subcategoryRepository.findByNameandFindByDescription(subcategory.getName(), subcategory.getDescription());
+		if(byNameandFindByDescription.isPresent()) {
+			return new Subcategory();
+	    } else {
+	        // Save the new category if it doesn't exist
+	        Subcategory saveSubcategory= subcategoryRepository.save(subcategory);
+	        log.info("Category Added Successfully: {}", saveSubcategory);
+	        return saveSubcategory;
+	    }
 	}
 
 	@Override
