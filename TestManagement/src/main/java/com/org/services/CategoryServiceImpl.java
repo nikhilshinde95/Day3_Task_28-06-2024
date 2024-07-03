@@ -47,11 +47,23 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category createCategory(Category category) {
-		log.info("Adding New Category..");
-		Category saveCategory = categoryRepository.save(category);
-		log.info("Category is Added Successfully..");
-		return saveCategory;
+	    log.info("Adding New Category: {}", category);
+
+	    // Check if a category with the same name and description already exists
+	    Optional<Category> existingCategory = categoryRepository.findByNameandFindByDescription(category.getName(), category.getDescription());
+	    
+	    // If category already exists, throw an exception
+	    if (existingCategory.isPresent()) {
+	    	log.warn("Entered Name and Description is Already Exists in Database..");
+	    	return new Category();
+	    } else {
+	        // Save the new category if it doesn't exist
+	        Category savedCategory = categoryRepository.save(category);
+	        log.info("Category Added Successfully: {}", savedCategory);
+	        return savedCategory;
+	    }
 	}
+
 
 	@Override
 	public Category updateCategory(Category category) {
