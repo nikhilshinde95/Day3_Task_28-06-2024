@@ -6,6 +6,11 @@ TestManagement is a Spring Boot project that manages multiple-choice questions (
 It includes features for creating, reading, getting specific, updating, and deleting MCQ questions. 
 The project uses PostgreSQL as the database and follows standard Java and SQL naming conventions.
 
+## Features : 
+- CRUD operations for Categories and MCQ Questions.
+- Uploading MCQ Questions from Excel files.
+- Association between Category, Subcategory, and MCQ Question entities.
+
 ## GitHub Clone Link
 
 Getting Started Clone the repository to your local machine: https://github.com/nikhilshinde95/Day3_Task_28-06-2024.git
