@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.org.entities.Category;
 import com.org.entities.MCQQuestion;
@@ -72,9 +74,9 @@ public class MCQQuestionControllerTest {
     
     @Test
     void getQuestionById() {
+    	
         // Mock data
 	 	MCQQuestion mockQuestion1 = new MCQQuestion(1L,subcategory1, "SpringBoot", "In Spring Boot @RestController annotation is equivalent to", "@Controller and @PostMapping", "@Controller and @Component", "@Controller and @ResponseBody", "@Controller and @ResponseStatus", 3, -1);
-        ResponseEntity<MCQQuestion> mockResponseEntity = ResponseEntity.ok().body(mockQuestion1);
 
         // Mock behavior
         when(questionService.getQuestionById(anyLong())).thenReturn(mockQuestion1);
@@ -125,9 +127,10 @@ public class MCQQuestionControllerTest {
         when(questionService.deleteQuestion(anyLong())).thenReturn(true);
 
         ResponseEntity<HttpStatus> responseEntity1 = controller.deleteQuestion(1L);
-        ResponseEntity<HttpStatus> responseEntity2 = controller.deleteQuestion(2L);
 
         assertEquals(HttpStatus.OK, responseEntity1.getStatusCode());
         
     }
+    
+    
 }
