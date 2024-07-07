@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.org.entities.Category;
-import com.org.entities.Subcategory;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
@@ -16,6 +15,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	    List<Category> findByName(@Param("name") String name);
 	 
 	 @Query("SELECT s FROM Category s WHERE s.name = :name and s.description = :description")
-	 Optional<Category> findByNameandFindByDescription(@Param("name") String name, @Param("description") String description);
+	 Optional<Category> findByNameandDescription(@Param("name") String name, @Param("description") String description);
 
 }
