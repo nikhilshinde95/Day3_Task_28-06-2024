@@ -58,7 +58,6 @@ Getting Started Clone the repository to your local machine: https://github.com/n
        spring.datasource.username=postgres
 
        spring.datasource.password=root
-
 ### Hibernate settings
 
        spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
@@ -68,7 +67,6 @@ Getting Started Clone the repository to your local machine: https://github.com/n
        spring.jpa.show-sql=true
 
        server.port=9091
-
 #### Adding Logger Properties
 
       logging.level.root=INFO
