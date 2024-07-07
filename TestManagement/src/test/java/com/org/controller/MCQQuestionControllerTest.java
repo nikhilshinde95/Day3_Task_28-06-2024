@@ -30,7 +30,6 @@ import com.org.services.SubcategoryService;
 
 @ExtendWith(MockitoExtension.class)
 public class MCQQuestionControllerTest {
-
 	
     @Mock
     private MCQQuestionService questionService;
