@@ -2,24 +2,21 @@ package com.org.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import com.org.controller.CategoryController;
 import com.org.entities.Category;
 import com.org.services.CategoryService;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class CategoryControllerTest {
 
@@ -43,16 +40,23 @@ public class CategoryControllerTest {
 
     @Test
     void testGetAllCategories() {
- 
+    	when(categoryService.createCategory(any(Category.class))).thenReturn(category1);
+    	ResponseEntity<Object> addCategory1 = categoryController.createCategory(category1);
+    	
+    	when(categoryService.createCategory(any(Category.class))).thenReturn(category2);
+    	ResponseEntity<Object> addCategory2 = categoryController.createCategory(category2);
+    	
+    	when(categoryService.createCategory(any(Category.class))).thenReturn(category3);
+    	ResponseEntity<Object> addCategory3 = categoryController.createCategory(category3);
+    	
         List<Category> mockCategories = new ArrayList<>();
         mockCategories.add(category1);
         mockCategories.add(category2);
         mockCategories.add(category3);
 
+        //Mock behavior
         when(categoryService.getAllCategories()).thenReturn(mockCategories);
-
         List<Category> actual = categoryController.getAllCategories();
-
         // Assertions
         assertEquals(3, actual.size(), "Expected 3 categories");
         assertEquals("Java", actual.get(0).getName(), "First category name should be Java");
@@ -62,48 +66,46 @@ public class CategoryControllerTest {
 
     @Test
     void testGetCategoryById() {
-    	
-       
-    	when(categoryService.getCategoryById(anyLong())).thenReturn(category1);
-    	ResponseEntity<Category> actual = categoryController.getCategoryById(1L);
-        
-        assertEquals(1L, actual.getBody().getId());   
-        
-    }
+    	when(categoryService.createCategory(any(Category.class))).thenReturn(category1);
+    	ResponseEntity<Object> addcategory = categoryController.createCategory(category1);
 
+    	when(categoryService.getCategoryById(anyLong())).thenReturn(category1);
+    	ResponseEntity<Category> actual = categoryController.getCategoryById(1L); 
+        assertEquals(1L, actual.getBody().getId());   
+    }
 
     @Test
     void testCreateCategory() {
     	
-        Category newCategory = new Category(null, "Java", "Core Java category");
-        Category savedCategory = new Category(1L, "Java", "Core Java category");
-
-        when(categoryService.createCategory(newCategory)).thenReturn(savedCategory);
-        ResponseEntity<Object> responseEntity = categoryController.createCategory(newCategory);
-
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode(), "Expected status Created");
-    
+    	when(categoryService.createCategory(any(Category.class))).thenReturn(category1);
+    	ResponseEntity<Object> addCategory = categoryController.createCategory(category1);	
+        assertEquals(HttpStatus.CREATED, addCategory.getStatusCode());  
     }
 
     @Test
     void testUpdateCategory() {
-        Long categoryId = 1L;
-        Category updatedCategory = new Category(categoryId, "Java", "Updated Core Java category");
-
-        when(categoryService.updateCategory(updatedCategory)).thenReturn(updatedCategory);
-
-        ResponseEntity<Category> responseEntity = categoryController.updateCategory(categoryId, updatedCategory);
+    	
+        //Creating Category
+    	when(categoryService.createCategory(any(Category.class))).thenReturn(category1);
+    	ResponseEntity<Object> addCategory = categoryController.createCategory(category1);
+    	
+    	//Updated Category
+        Category updatedCategory = new Category(1L, "Java", "Updated Core Java category");
+        
+        when(categoryService.updateCategory(any(Category.class))).thenReturn(updatedCategory);
+        ResponseEntity<Category> responseEntity = categoryController.updateCategory(category1.getId(), updatedCategory);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "Expected status OK");
-        assertEquals("Updated Core Java category", responseEntity.getBody().getDescription(), "Category description should be updated");
+        assertEquals("Updated Core Java category", responseEntity.getBody().getDescription());
     }
 
     @Test
     void testDeleteCategory() {
-        Long categoryId = 1L;
-        when(categoryService.deleteCategory(categoryId)).thenReturn(true);
-
-        ResponseEntity<HttpStatus> responseEntity = categoryController.deleteCategory(categoryId);
+    	when(categoryService.createCategory(any(Category.class))).thenReturn(category1);
+    	ResponseEntity<Object> addCategory = categoryController.createCategory(category1);
+    	
+        when(categoryService.deleteCategory(anyLong())).thenReturn(true);
+        ResponseEntity<HttpStatus> responseEntity = categoryController.deleteCategory(1l);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "Expected status OK");
     }
 }
