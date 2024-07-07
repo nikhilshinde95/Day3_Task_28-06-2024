@@ -106,7 +106,6 @@ public class CategoryServiceImplTest {
 		
 		when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(addCategory));
 		boolean deleteCategory = categoryServiceImpl.deleteCategory(1L);
-		
 		assertEquals(true, deleteCategory);
 	}
 	
