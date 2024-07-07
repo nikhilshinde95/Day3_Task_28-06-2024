@@ -22,11 +22,10 @@ import com.org.entities.Category;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) 
 public class CategoryRepositoryTest {
-	
+   	
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-
     private Category category1;
     private Category category2;
     private Category category3;
@@ -36,8 +35,7 @@ public class CategoryRepositoryTest {
     private Category dbCategory3;
     
     @BeforeEach
-    public void setUp() {
-       
+    public void setUp() { 
         category1 = new Category(1L, "Java", "Core Java category");
         category2 = new Category(2L, "SQL", "Database SQL category");
         category3 = new Category(3L, "Spring Boot", "Spring Boot Framework category");
@@ -55,7 +53,6 @@ public class CategoryRepositoryTest {
     
     @Test
     public void testFindAll() {
-    
     	List<Category> result = categoryRepository.findAll();
     	assertEquals(3, result.size());
     	assertNotEquals(0L, result.size());	
@@ -73,7 +70,6 @@ public class CategoryRepositoryTest {
     @Test
     public void testSave() {
     	Category saved = categoryRepository.save(category1);
-    	
     	assertEquals(1, saved.getId());
     	assertNotNull(saved);
     	assertNotEquals("Python",saved.getName());
@@ -104,7 +100,6 @@ public class CategoryRepositoryTest {
     @Test
     public void testFindByNameandDescription() {
     	Optional<Category> categoryOpt = categoryRepository.findByNameandDescription(dbCategory1.getName(), dbCategory1.getDescription());
-    	
     	assertEquals("Java", categoryOpt.get().getName());
     	assertEquals("Core Java category", categoryOpt.get().getDescription());
     }
