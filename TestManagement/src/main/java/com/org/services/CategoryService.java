@@ -5,13 +5,14 @@ import java.util.List;
 import com.org.entities.Category;
 
 public interface CategoryService {
-	List<Category> getAllCategories();
+	
+	public List<Category> getAllCategories();
 
-	Category getCategoryById(Long id);
+	public Category getCategoryById(Long id);
 
-	Category createCategory(Category category);
+	public Category createCategory(Category category);
 
-	Category updateCategory(Category category);
+	public Category updateCategory(Category category);
 
-	boolean deleteCategory(Long id);
+	public boolean deleteCategory(Long id);
 }
