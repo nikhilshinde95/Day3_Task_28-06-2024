@@ -96,14 +96,11 @@ public class CategoryServiceImplTest {
 	 	when(categoryRepository.save(any(Category.class))).thenReturn(category1);
 	 	Category updatedCategory = categoryServiceImpl.createCategory(category1);
 	 	assertEquals("Updated Core Java category", updatedCategory.getDescription());
-	 	assertEquals("Core Java", updatedCategory.getName());
-	 	
-		
+	 	assertEquals("Core Java", updatedCategory.getName());	
 	}
 	
 	@Test
 	void testDeleteCategory() {
-		
 		when(categoryRepository.save(any(Category.class))).thenReturn(category1);
 		Category addCategory = categoryServiceImpl.createCategory(category1);
 		
