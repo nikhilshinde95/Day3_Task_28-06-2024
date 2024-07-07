@@ -61,19 +61,24 @@ Getting Started Clone the repository to your local machine: https://github.com/n
        spring.datasource.password=root
 
 ### Hibernate settings
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
 
-server.port=9091
+       spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+       spring.jpa.hibernate.ddl-auto=update
+
+       spring.jpa.show-sql=true
+
+       server.port=9091
 
 #### Adding Logger Properties
-logging.level.root=INFO
-logging.level.org.springframework.web=DEBUG
-logging.file.name=my-app.log
-logging.file.path=/var/log/my-app
 
-
+      logging.level.root=INFO
+      
+      logging.level.org.springframework.web=DEBUG
+      
+      logging.file.name=my-app.log
+      
+      logging.file.path=/var/log/my-app
 
 ## Feature Added: MultipleChoiceQuestionTest
 
