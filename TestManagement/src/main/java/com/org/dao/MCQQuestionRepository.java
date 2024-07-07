@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.org.entities.MCQQuestion;
 
-public interface MCQDao extends JpaRepository<MCQQuestion, Long> {
+public interface MCQQuestionRepository extends JpaRepository<MCQQuestion, Long> {
 
 }
