@@ -48,6 +48,28 @@ Getting Started Clone the repository to your local machine: https://github.com/n
 1. Install PostgreSQL.
 2. Create a database named `TestManagementDB`.
 3. Update the `application.properties` file with your PostgreSQL credentials.
+   spring.application.name=TestManagement
+
+### Database connection settings
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.url=jdbc:postgresql://localhost:5432/TestManagementDB
+spring.datasource.username=postgres
+spring.datasource.password=root
+
+### Hibernate settings
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+server.port=9091
+
+#### Adding Logger Properties
+logging.level.root=INFO
+logging.level.org.springframework.web=DEBUG
+logging.file.name=my-app.log
+logging.file.path=/var/log/my-app
+
+
 
 ## Feature Added: MultipleChoiceQuestionTest
 
