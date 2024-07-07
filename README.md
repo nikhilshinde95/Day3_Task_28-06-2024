@@ -49,7 +49,6 @@ Getting Started Clone the repository to your local machine: https://github.com/n
 2. Create a database named `TestManagementDB`.
 3. Update the `application.properties` file with your PostgreSQL credentials.
    spring.application.name=TestManagement
-
 ### Database connection settings
 
        spring.datasource.driver-class-name=org.postgresql.Driver
