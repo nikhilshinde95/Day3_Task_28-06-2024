@@ -18,5 +18,5 @@ public interface MCQQuestionService {
 
 	boolean deleteQuestion(long questionId);
 	
-	public List<MCQQuestion> uploadQuestions(MultipartFile file);
+	List<MCQQuestion> uploadQuestions(MultipartFile file);
 }
