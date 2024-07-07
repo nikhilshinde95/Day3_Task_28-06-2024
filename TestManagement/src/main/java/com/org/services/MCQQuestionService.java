@@ -8,15 +8,15 @@ import com.org.entities.MCQQuestion;
 
 public interface MCQQuestionService {
 	
-	List<MCQQuestion> getAllQuestions();
+	public List<MCQQuestion> getAllQuestions();
 
-	MCQQuestion getQuestionById(long questionId);
+	public MCQQuestion getQuestionById(long questionId);
 
-	MCQQuestion createQuestion(MCQQuestion mcqQuestion);
+	public MCQQuestion createQuestion(MCQQuestion mcqQuestion);
 
-	MCQQuestion updateQuestion(MCQQuestion mcqQuestion);
+	public MCQQuestion updateQuestion(MCQQuestion mcqQuestion);
 
-	boolean deleteQuestion(long questionId);
+	public boolean deleteQuestion(long questionId);
 	
-	List<MCQQuestion> uploadQuestions(MultipartFile file);
+	public List<MCQQuestion> uploadQuestions(MultipartFile file);
 }
