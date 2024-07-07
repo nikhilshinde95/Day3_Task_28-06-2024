@@ -95,7 +95,6 @@ public class SubcategoryRepositoryTest {
     	assertNotNull(result);
     }
     
-    
     @Test
     public void testDelete() {
     	subcategoryRepository.deleteById(dbSubcategory1.getId());
