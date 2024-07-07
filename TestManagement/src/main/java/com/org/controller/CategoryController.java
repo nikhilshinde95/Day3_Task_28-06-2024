@@ -13,6 +13,7 @@ import com.org.entities.Category;
 import com.org.services.CategoryService;
 
 @RestController
+@RequestMapping("/api/categories")
 public class CategoryController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
@@ -20,66 +21,47 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@GetMapping("/categories")
+	@GetMapping()
 	public List<Category> getAllCategories() {
 		logger.info("Fetching all categories");
 		List<Category> allCategories = categoryService.getAllCategories();
+		logger.debug("All Categories are Fetched Successfully...");
 		return allCategories;
 	}
 
-	@GetMapping("/categories/{categoryId}")
+	@GetMapping("/{categoryId}")
 	public ResponseEntity<Category> getCategoryById(@PathVariable("categoryId") Long categoryId) {
-		try {
+		
 			logger.info("Fetching category with id: {}", categoryId);
 			Category category = categoryService.getCategoryById(categoryId);
+			logger.debug("Category with ID is Fetched Successfully.");
 			return ResponseEntity.ok().body(category);
-		} catch (Exception e) {
-			logger.error("Error occurred while fetching category with id: {}. Error message: {}", categoryId, e.getMessage());
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
+		
 	}
 
-	@PostMapping("/categories")
+	@PostMapping()
 	public ResponseEntity<Object> createCategory(@RequestBody Category category) {
-		try {
 			logger.info("Creating category: {}", category);
 			Category createdCategory = categoryService.createCategory(category);
-			if(createdCategory !=null && createdCategory.getId()!=null) {
-				return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
-			}
-			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Subcategory is Already Exists in Database");
-		} catch (Exception e) {
-			logger.error("Error occurred while creating category. Error message: {}", e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+			logger.debug("New Category is Created Successfully..");
+			return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+		
 	}
 
-	@PutMapping("/categories/{categoryId}")
+	@PutMapping("/{categoryId}")
 	public ResponseEntity<Category> updateCategory(@PathVariable("categoryId") Long categoryId, @RequestBody Category category) {
-		try {
 			logger.info("Updating category with id: {}", categoryId);
 			category.setId(categoryId);
 			Category updatedCategory = categoryService.updateCategory(category);
+			logger.debug("Category is Updated Successfully..");
 			return ResponseEntity.ok().body(updatedCategory);
-		} catch (Exception e) {
-			logger.error("Error occurred while updating category with id: {}. Error message: {}", categoryId, e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
 	}
 
-	@DeleteMapping("/categories/{categoryId}")
+	@DeleteMapping("/{categoryId}")
 	public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("categoryId") Long categoryId) {
-		try {
 			logger.info("Deleting category with id: {}", categoryId);
 			boolean isDeleted = categoryService.deleteCategory(categoryId);
-			if (isDeleted) {
-				return ResponseEntity.ok().build();
-			} else {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-			}
-		} catch (Exception e) {
-			logger.error("Error occurred while deleting category with id: {}. Error message: {}", categoryId, e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+			logger.info("Category is Deleted Successfully.");
+			return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
