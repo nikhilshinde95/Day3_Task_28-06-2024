@@ -6,13 +6,13 @@ import com.org.entities.Subcategory;
 
 public interface SubcategoryService {
 	
-	List<Subcategory> getAllSubcategories();
+	public List<Subcategory> getAllSubcategories();
 
-	Subcategory getSubcategoryById(Long id);
+	public Subcategory getSubcategoryById(Long id);
 
-	Subcategory createSubcategory(Subcategory subcategory);
+	public Subcategory createSubcategory(Subcategory subcategory);
 
-	Subcategory updateSubcategory(Subcategory subcategory);
+	public Subcategory updateSubcategory(Subcategory subcategory);
 
-	boolean deleteSubcategory(Long id);
+	public boolean deleteSubcategory(Long id);
 }
