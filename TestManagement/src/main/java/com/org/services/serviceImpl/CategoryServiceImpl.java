@@ -19,8 +19,7 @@ import com.org.services.CategoryService;
 public class CategoryServiceImpl implements CategoryService {
 	
     private static final Logger log = LoggerFactory.getLogger(MCQQuestionServiceImpl.class);
-
-
+	
 	@Autowired
 	private CategoryRepository categoryRepository;
 
