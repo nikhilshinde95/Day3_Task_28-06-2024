@@ -51,10 +51,14 @@ Getting Started Clone the repository to your local machine: https://github.com/n
    spring.application.name=TestManagement
 
 ### Database connection settings
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.url=jdbc:postgresql://localhost:5432/TestManagementDB
-spring.datasource.username=postgres
-spring.datasource.password=root
+
+       spring.datasource.driver-class-name=org.postgresql.Driver
+
+       spring.datasource.url=jdbc:postgresql://localhost:5432/TestManagementDB
+      
+       spring.datasource.username=postgres
+
+       spring.datasource.password=root
 
 ### Hibernate settings
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
