@@ -2,6 +2,7 @@ package com.org.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -20,13 +21,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.org.dao.CategoryRepository;
 import com.org.entities.Category;
+import com.org.services.serviceImpl.CategoryServiceImpl;
 
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceImplTest {
 	
-
 	@Mock
 	private CategoryRepository categoryRepository;
 	
@@ -39,66 +40,69 @@ public class CategoryServiceImplTest {
 	
 	@BeforeEach
 	public void SetUp() {
-		 	category1 = new Category(1L, "Java", "Core Java category");
+		category1 = new Category(1L, "Java", "Core Java category");
 	        category2 = new Category(2L, "SQL", "Database SQL category");
 	        category3 = new Category(3L, "Spring Boot", "Spring Boot Framework category");
 	}
 	
 	@Test
-	void getAllCategories() {
+	void testGetAllCategories() {
+		when(categoryRepository.save(any(Category.class))).thenReturn(category1);
+		Category addCategory1 = categoryServiceImpl.createCategory(category1);
+		
+		when(categoryRepository.save(any(Category.class))).thenReturn(category2);
+		Category addCategory2 = categoryServiceImpl.createCategory(category2);
+		
+		when(categoryRepository.save(any(Category.class))).thenReturn(category3);
+		Category addCategory3 = categoryServiceImpl.createCategory(category3);
 		
 		ArrayList<Category> list = new ArrayList<Category>();
-		list.add(category1);
-		list.add(category2);
-		list.add(category3);
+		list.add(addCategory1);
+		list.add(addCategory2);
+		list.add(addCategory3);
 		
 		when(categoryRepository.findAll()).thenReturn(list);
 		List<Category> actual = categoryServiceImpl.getAllCategories();
-		
 		assertEquals(3, actual.size());
 		assertNotEquals(4, actual.size());
 		
 	}
 	
 	@Test
-	void getCategoryById() {
-		
+	void testGetCategoryById() {
 		when(categoryRepository.save(any(Category.class))).thenReturn(category1);
 		Category addCategory = categoryServiceImpl.createCategory(category1);
 		
 		when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(addCategory));
 		Category actual = categoryServiceImpl.getCategoryById(1L);
-		
 		assertEquals(1, actual.getId());
 		
 	}
 	
 	@Test
-	void createCategory() {
-		
+	void testCreateCategory() {
 		when(categoryRepository.save(any(Category.class))).thenReturn(category1);
 		Category actual = categoryServiceImpl.createCategory(category1);
-		assertEquals(category1, actual);
+		assertEquals(category1, actual);	
 	}
 	
 	@Test
-	void updateCategory() {
+	void testUpdateCategory() {
 		//save category
 		when(categoryRepository.save(any(Category.class))).thenReturn(category1);
 		Category createCategory = categoryServiceImpl.createCategory(category1);
 		
-		//update category
-	 	category1 = new Category(1L, "Java", "Updated Core Java category");
+	 	category1 = new Category(1L, "Core Java", "Updated Core Java category");
 	 	when(categoryRepository.save(any(Category.class))).thenReturn(category1);
-	 	Category updateCategory = categoryServiceImpl.updateCategory(category1);
+	 	Category updatedCategory = categoryServiceImpl.createCategory(category1);
+	 	assertEquals("Updated Core Java category", updatedCategory.getDescription());
+	 	assertEquals("Core Java", updatedCategory.getName());
 	 	
-	 	//assertion
-	 	assertEquals("Updated Core Java category", updateCategory.getDescription());
 		
 	}
 	
 	@Test
-	void deleteCategory() {
+	void testDeleteCategory() {
 		
 		when(categoryRepository.save(any(Category.class))).thenReturn(category1);
 		Category addCategory = categoryServiceImpl.createCategory(category1);
@@ -108,8 +112,6 @@ public class CategoryServiceImplTest {
 		
 		assertEquals(true, deleteCategory);
 	}
-	
-	
 	
 
 }
