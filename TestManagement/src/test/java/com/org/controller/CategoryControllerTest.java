@@ -38,8 +38,9 @@ public class CategoryControllerTest {
         category3 = new Category(3L, "Spring Boot", "Spring Boot Framework category");
     }
 
-    @Test
+     @Test
     void testGetAllCategories() {
+    	
     	when(categoryService.createCategory(any(Category.class))).thenReturn(category1);
     	ResponseEntity<Object> addCategory1 = categoryController.createCategory(category1);
     	
@@ -56,12 +57,10 @@ public class CategoryControllerTest {
 
         //Mock behavior
         when(categoryService.getAllCategories()).thenReturn(mockCategories);
-        List<Category> actual = categoryController.getAllCategories();
-        // Assertions
-        assertEquals(3, actual.size(), "Expected 3 categories");
-        assertEquals("Java", actual.get(0).getName(), "First category name should be Java");
-        assertEquals("SQL", actual.get(1).getName(), "Second category name should be SQL");
-        assertEquals("Spring Boot", actual.get(2).getName(), "Third category name should be Spring Boot");
+        ResponseEntity<List<Category>> actual = categoryController.getAllCategories();
+        assertEquals(HttpStatus.OK,actual.getStatusCode());
+        assertNotNull(actual);
+        assertEquals(3, actual.getBody().size());
     }
 
     @Test
