@@ -22,11 +22,11 @@ public class CategoryController {
 	private CategoryService categoryService;
 
 	@GetMapping()
-	public List<Category> getAllCategories() {
+	public ResponseEntity<List<Category>> getAllCategories() {
 		logger.info("Fetching all categories");
 		List<Category> allCategories = categoryService.getAllCategories();
 		logger.debug("All Categories are Fetched Successfully...");
-		return allCategories;
+		return ResponseEntity.status(HttpStatus.OK).body(allCategories);
 	}
 
 	@GetMapping("/{categoryId}")
